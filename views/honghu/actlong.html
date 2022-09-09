@@ -1,0 +1,71 @@
+<html>
+
+<header>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0;"name="viewport"/>
+
+    <meta content="yes"name="apple-mobile-web-app-capable"/>
+    
+    <meta content="black"name="apple-mobile-web-app-status-bar-style"/>
+    
+    <meta content="telephone=no"name="format-detection"/>
+    
+    <meta content="email=no"name="format-detection"/>
+</header>
+
+<body>
+    <ul>
+        <li>品名: <font id="name"></font>  库存<font id="lefts"></font>份</li>
+        <li><img src="apple.jpeg" with="60" height="60" /></li>
+        <li>价格： <font id="price"></font></li>
+        <li>介绍： <font id="desc"></font></li>
+        <li>重量： <font id="unitNums"></font><font id="unit"></font></li>
+        <li>类型： <font id="typ"></font></li>
+        <li>精品:  <font id="high"></font></li>
+        <li>促销： <font id="saleDesc"></font></li>
+        <li>创建时间:<font id="createAt"></li>
+        <li>结束时间:<font id="endAt"></li>
+        <li>大约取货时间:<font id="getGoodTime"></li>
+        <li>取货地址:<font id="getGoodAddr"></li>
+    </ul>
+    <button>参于</button>
+    <div>已热销<font id="sales"></font>份</div>
+</body>
+
+</html>
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script type="text/javascript">
+    console.log("start ajax service.................")
+            $.ajax({
+                type : "GET",
+                url : "http://127.0.0.1:9502/v2/goods/one/8",
+                data : {
+                },
+                cache: false,
+                dataType : "json",
+                success : function(data) {
+                    if (data.errCode < 0) {
+                        $("#errMsg").show().html(data.errMsg).stop(true, true)
+                                .fadeOut(3000);
+                    } else {
+                        console.log(data.data)
+                        //登录成功，做其他处理
+                        item = data.data 
+                        $('#name').text(item.name)
+                        $('#lefts').text(item.lefts)
+                        $('#price').text(item.price)
+                        $('#desc').text(item.bio)
+                        $('#unitNums').text(item.unit_nums)
+                        $('#unit').text(item.unit)
+                        $('#typ').text("水果")
+                        $('#high').text("是")
+                        $('#saleDesc').text(item.desc_sale)
+                        $('#createAt').text(item.created_at)
+                        $('#endAt').text(item.end_time)
+                        $('#getGoodTime').text(item.get_good_time)
+                        $('#getGoodAddr').text(item.get_goods_addr)
+                        $('#sales').text(item.sales)
+                    }
+                }
+            });
+</script>
